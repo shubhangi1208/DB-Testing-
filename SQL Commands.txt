@@ -1,0 +1,443 @@
+*Create Database:-
+Create Database dbtesting;
+Query OK, 1 row affected (0.11 sec)
+
+*Show Databases:-
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbtesting          |
+| emmployeeinfo      |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.07 sec)
+
+*Use Databases:-
+mysql> use dbtesting;
+Database changed
+
+*DROP Database
+mysql> Drop Database dbtesting;
+Query OK, 0 rows affected (0.27 sec)
+
+*CREATE TABLE:-
+
+create table employeeinformation( id int not null auto_increment,Firstname varchar(40),Lastname varchar (40),age int not null,primary key(id));
+Query OK, 0 rows affected (0.71 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_emmployeeinfo |
++-------------------------+
+| employee_table          |
+| employeeinformation     |
+| persons                 |
++-------------------------+
+3 rows in set (0.12 sec)
+
+mysql> describe employeeinformation;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| Firstname | varchar(40) | YES  |     | NULL    |                |
+| Lastname  | varchar(40) | YES  |     | NULL    |                |
+| age       | int         | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.12 sec)
+
+*ALTER Table:-
+1) ADD a column in the table
+mysql> alter table employeeinformation add Company varchar(45) not null;
+Query OK, 0 rows affected (0.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+2)MODIFY column in the table
+mysql> alter table employeeinformation modify Firstname varchar(45) not null;
+Query OK, 0 rows affected (0.71 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employeeinformation;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| Firstname | varchar(45) | NO   |     | NULL    |                |
+| Lastname  | varchar(40) | YES  |     | NULL    |                |
+| age       | int         | NO   |     | NULL    |                |
+| Company   | varchar(45) | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.17 sec)
+
+3)DROP column in table
+
+mysql> alter table employeeinformation drop Company;
+Query OK, 0 rows affected (0.42 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employeeinformation;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| Firstname | varchar(45) | NO   |     | NULL    |                |
+| Lastname  | varchar(40) | YES  |     | NULL    |                |
+| age       | int         | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.10 sec)
+
+4)RENAME column in table;-
+mysql> alter table employeeinformation change Lastname Surname varchar(45) not null;
+Query OK, 0 rows affected (0.80 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employeeinformation;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| Firstname | varchar(45) | NO   |     | NULL    |                |
+| Surname   | varchar(45) | NO   |     | NULL    |                |
+| age       | int         | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.13 sec)
+
+5)RENAME table:-
+mysql> alter table employeeinformation rename to employeedata;
+Query OK, 0 rows affected (0.35 sec)
+
+
+*TRUNCATE Table:-
+mysql> truncate table persons;
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> select *from persons;
+Empty set (0.15 sec)
+
+*Drop Table:-
+mysql> drop table persons;
+Query OK, 0 rows affected (0.75 sec)
+
+mysql> select *from persons;
+ERROR 1146 (42S02): Table 'emmployeeinfo.persons' doesn't exist
+mysql>
+
+
+*Insert record:-
+1)Insert record in a single row:
+mysql> insert into employeedata(id,Firstname,Surname,age) values (1,'Shubhangi','Topale',25);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select *from employeedata;
++----+-----------+---------+-----+
+| id | Firstname | Surname | age |
++----+-----------+---------+-----+
+|  1 | Shubhangi | Topale  |  25 |
++----+-----------+---------+-----+
+1 row in set (0.00 sec)
+
+2)Insert record in multiple rows:-
+mysql> insert into employeedata values(2,'Shubh','Amilkanthwar',24),(3,'Shubhangi','Amilkanthwar',24),(4,'shital','More',26),(5,'sita','khare',22);
+Query OK, 4 rows affected (0.09 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from employeedata;
++----+-----------+--------------+-----+
+| id | Firstname | Surname      | age |
++----+-----------+--------------+-----+
+|  1 | Shubhangi | Topale       |  25 |
+|  2 | Shubh     | Amilkanthwar |  24 |
+|  3 | Shubhangi | Amilkanthwar |  24 |
+|  4 | shital    | More         |  26 |
+|  5 | sita      | khare        |  22 |
++----+-----------+--------------+-----+
+5 rows in set (0.00 sec)
+
+3)Insert record in partial field:-
+mysql> insert into employeedata(id,Firstname,age)values(6,'ram',28);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select *from employeedata;
++----+-----------+--------------+-----+
+| id | Firstname | Lastname     | age |
++----+-----------+--------------+-----+
+|  1 | Shubhangi | Topale       |  25 |
+|  2 | Shubh     | Amilkanthwar |  24 |
+|  3 | Shubhangi | Amilkanthwar |  24 |
+|  4 | shital    | More         |  26 |
+|  5 | sita      | khare        |  22 |
+|  6 | ram       | NULL         |  28 |
++----+-----------+--------------+-----+
+6 rows in set (0.00 sec)
+
+*UPDATE record:-
+mysql> alter table employeedata add DOB DATE;
+Query OK, 0 rows affected (0.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employeedata;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| Firstname | varchar(45) | NO   |     | NULL    |                |
+| Lastname  | varchar(45) | YES  |     | NULL    |                |
+| age       | int         | NO   |     | NULL    |                |
+| DOB       | date        | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE `employeedata` SET `DOB` = '1996-05-11' WHERE (`id` = '2');
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from employeedata;
++----+-----------+--------------+-----+------------+
+| id | Firstname | Lastname     | age | DOB        |
++----+-----------+--------------+-----+------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       |
+|  4 | shital    | More         |  26 | NULL       |
+|  5 | sita      | khare        |  22 | NULL       |
+|  6 | ram       | NULL         |  28 | NULL       |
++----+-----------+--------------+-----+------------+
+6 rows in set (0.00 sec)
+
+mysql> update employeedata set Lastname ='joshi' where id=4;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+*UPDATE Statement to Replace String():-
+changing Email Source from @gmail.com to @yahoo.com
+
+mysql> update employeedata set email=replace (Email,'@gmail.com','@yahoo.com')
+    -> where id=1;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employeedata;
++----+-----------+--------------+-----+------------+---------------------+
+| id | Firstname | Lastname     | age | DOB        | Email               |
++----+-----------+--------------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 | shubhangi@yahoo.com |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com     |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL                |
+|  4 | shital    | joshi        |  26 | 1995-12-01 | NULL                |
+|  5 | sita      | khare        |  22 | NULL       | NULL                |
+|  6 | ram       | NULL         |  28 | NULL       | NULL                |
++----+-----------+--------------+-----+------------+---------------------+
+6 rows in set (0.03 sec)
+
+*DELETE Record:-
+1)DELETE Single Record:-
+mysql> delete from employeedata where id=6;
+Query OK, 1 row affected (0.16 sec)
+
+mysql> select *from employeedata;
++----+-----------+--------------+-----+------------+---------------------+
+| id | Firstname | Lastname     | age | DOB        | Email               |
++----+-----------+--------------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 | shubhangi@yahoo.com |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com     |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL                |
+|  4 | shital    | joshi        |  26 | 1995-12-01 | NULL                |
+|  5 | sita      | khare        |  22 | NULL       | NULL                |
++----+-----------+--------------+-----+------------+---------------------+
+5 rows in set (0.08 sec)
+
+2)Delete All Record:-
+mysql> delete from employeedata;
+
+3)DELETE and LIMIT Clause:-
+mysql> delete from employeedata order by Firstname limit 2;
+Query OK, 2 rows affected (0.15 sec)
+
+mysql> select * from employeedata;
++----+-----------+--------------+-----+------------+---------------------+
+| id | Firstname | Lastname     | age | DOB        | Email               |
++----+-----------+--------------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 | shubhangi@yahoo.com |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com     |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL                |
+|  4 | shital    | joshi        |  26 | 1995-12-01 | NULL                |
+|  5 | sita      | khare        |  22 | NULL       | NULL                |
++----+-----------+--------------+-----+------------+---------------------+
+5 rows in set (0.05 sec)
+
+*MySQL Clauses:-
+
+mysql> select* from employeedata where Lastname='Amilkanthwar';
++----+-----------+--------------+-----+------------+-----------------+
+| id | Firstname | Lastname     | age | DOB        | Email           |
++----+-----------+--------------+-----+------------+-----------------+
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL            |
++----+-----------+--------------+-----+------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employeedata
+    -> where Lastname='Amilkanthwar'
+    -> order by Firstname asc;
++----+-----------+--------------+-----+------------+-----------------+
+| id | Firstname | Lastname     | age | DOB        | Email           |
++----+-----------+--------------+-----+------------+-----------------+
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL            |
++----+-----------+--------------+-----+------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employeedata
+    -> where Lastname='Amilkanthwar'
+    ->  order by Firstname desc;
++----+-----------+--------------+-----+------------+-----------------+
+| id | Firstname | Lastname     | age | DOB        | Email           |
++----+-----------+--------------+-----+------------+-----------------+
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL            |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com |
++----+-----------+--------------+-----+------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql>SELECT Firstname, Lastname    
+     ->FROM employeedata    
+     ->GROUP BY Firstname   
+     ->HAVING SUM(age) > 24;  
++-----------+----------+
+| Firstname | Lastname |
++-----------+----------+
+| Shubhangi | Topale   |
+| shital    | joshi    |
++-----------+----------+
+2 rows in set (0.00 sec)
+
+*WHERE Clause
+mysql> select* from employeedata where Lastname='Amilkanthwar';
++----+-----------+--------------+-----+------------+-----------------+
+| id | Firstname | Lastname     | age | DOB        | Email           |
++----+-----------+--------------+-----+------------+-----------------+
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL            |
++----+-----------+--------------+-----+------------+-----------------+
+2 rows in set (0.00 sec)
+
+*WHERE Clause with AND condition
+mysql> select* from employeedata where Lastname='Amilkanthwar'And id<3;
++----+-----------+--------------+-----+------------+-----------------+
+| id | Firstname | Lastname     | age | DOB        | Email           |
++----+-----------+--------------+-----+------------+-----------------+
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com |
++----+-----------+--------------+-----+------------+-----------------+
+1 row in set (0.01 sec)
+
+*WHERE Clause with OR condition
+mysql> select* from employeedata where Lastname='Amilkanthwar'or id<3;
++----+-----------+--------------+-----+------------+---------------------+
+| id | Firstname | Lastname     | age | DOB        | Email               |
++----+-----------+--------------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 | shubhangi@yahoo.com |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com     |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL                |
++----+-----------+--------------+-----+------------+---------------------+
+3 rows in set (0.00 sec)
+
+*WHERE Clause with AND OR condition
+mysql> SELECT * FROM employeedata   WHERE (Firstname = 'Shubhangi' AND age =25 );
++----+-----------+----------+-----+------------+---------------------+
+| id | Firstname | Lastname | age | DOB        | Email               |
++----+-----------+----------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale   |  25 | 1996-04-06 | shubhangi@yahoo.com |
++----+-----------+----------+-----+------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM employeedata   WHERE (Firstname = 'Shubhangi' AND age =25 )  OR (id <=3);
++----+-----------+--------------+-----+------------+---------------------+
+| id | Firstname | Lastname     | age | DOB        | Email               |
++----+-----------+--------------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 | shubhangi@yahoo.com |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com     |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL                |
++----+-----------+--------------+-----+------------+---------------------+
+3 rows in set (0.00 sec)
+
+*LIKE condition:-
+mysql> select Firstname from employeedata where Firstname like '_h%';
++-----------+
+| Firstname |
++-----------+
+| Shubhangi |
+| Shubh     |
+| Shubhangi |
+| shital    |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> select Firstname from employeedata where Firstname like 'S%';
++-----------+
+| Firstname |
++-----------+
+| Shubhangi |
+| Shubh     |
+| Shubhangi |
+| shital    |
+| sita      |
++-----------+
+5 rows in set (0.00 sec)
+
+*Not LIKE condition:-
+mysql> select lastname from employeedata where lastname not like 'amil%';
++----------+
+| lastname |
++----------+
+| Topale   |
+| joshi    |
+| khare    |
++----------+
+3 rows in set (0.00 sec)
+	
+*IN Condition
+mysql> select * from employeedata where firstname in('shital','sita','shubh');
++----+-----------+--------------+-----+------------+-----------------+
+| id | Firstname | Lastname     | age | DOB        | Email           |
++----+-----------+--------------+-----+------------+-----------------+
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com |
+|  4 | shital    | joshi        |  26 | 1995-12-01 | NULL            |
+|  5 | sita      | khare        |  22 | NULL       | NULL            |
++----+-----------+--------------+-----+------------+-----------------+
+3 rows in set (0.00 sec)
+
+*BETWEEN Condition:-
+mysql> select * FROM employeedata where DOB between '1996-04-01'and '1996-05-12';
++----+-----------+--------------+-----+------------+---------------------+
+| id | Firstname | Lastname     | age | DOB        | Email               |
++----+-----------+--------------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 | shubhangi@yahoo.com |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com     |
++----+-----------+--------------+-----+------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * FROM employeedata where id between 1 and 3;
++----+-----------+--------------+-----+------------+---------------------+
+| id | Firstname | Lastname     | age | DOB        | Email               |
++----+-----------+--------------+-----+------------+---------------------+
+|  1 | Shubhangi | Topale       |  25 | 1996-04-06 | shubhangi@yahoo.com |
+|  2 | Shubh     | Amilkanthwar |  24 | 1996-05-11 | shubh@gmail.com     |
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL       | NULL                |
++----+-----------+--------------+-----+------------+---------------------+
+3 rows in set (0.04 sec)
+
+*IS NULL Condition:-
+mysql> select * from employeedata where DOB is null;
++----+-----------+--------------+-----+------+-------+
+| id | Firstname | Lastname     | age | DOB  | Email |
++----+-----------+--------------+-----+------+-------+
+|  3 | Shubhangi | Amilkanthwar |  24 | NULL | NULL  |
+|  5 | sita      | khare        |  22 | NULL | NULL  |
++----+-----------+--------------+-----+------+-------+
+2 rows in set (0.00 sec)
